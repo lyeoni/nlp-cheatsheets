@@ -40,7 +40,8 @@ def demo_basic(rank, world_size):
     outputs = distributed_model(torch.randn(20, 10))
 
     # save distributed model
-    save_distributed_model('model', distributed_model)
+    if rank == 0:
+        save_distributed_model('model', distributed_model)
 
 def run_demo(demo_fn, world_size):
     mp.spawn(demo_fn, args=(world_size,), nprocs=world_size, join=True)
